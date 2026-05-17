@@ -1,4 +1,7 @@
 import questionary
+import os
+import time
+
 
 
 
@@ -10,6 +13,9 @@ delete notes
 
 
 """
+
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 
 
@@ -33,40 +39,77 @@ while True:
         case "add task":
            task =  input("enter your task:")
            l.append(task)
+           print("TASK ADDED SUCCESFULLY")
+           time.sleep(0.5)
+           clear_screen()
            continue
         
         case "view task":
-            for row in l:
-                print(str(l.index(row)+1)+"." + row + "\n")
+            if not l:
+                print("there are no tasks, add a task to view it!!")
+                print("\n")
+
+            else :
+                for row in l:
+                    print(str(l.index(row)+1)+"." + row)
+                
+                print("\n")
 
             continue
 
         
 
         case "delete task":
-            delt =  int(input("enter the task number you want to delete: "))
-            
-            del l[delt-1]
-            
-            print(f"deleted {delt} task, the remaining tasks are: \n")
+            if not l:
+                print("there are no tasks, add a task to delete it!!")
+                continue
+
+            delt = questionary.select("select the task you want to delete:",choices = l).ask()
+            # delt =  int(input("enter the task number you want to delete: "))
+            l.remove(delt)
+            print(f"deleted the task, the remaining tasks are: \n")
             for row in l:
                 print(str(l.index(row)+1)+"." + row + "\n")
 
-            pass
+            clear_screen()
+            
 
         case "update task":
-            upd = int(input("enter the task number you want to update: "))
-            text = input("enter the updated task: ")
-            l[upd-1] = text
+
+            if not l:
+                print("there are no tasks, add a task to update it!!")
+                continue
+
+            upd = questionary.select("select the tasks from below to update: ",choices =l).ask()
+
+            text = input("enter the updated task:")
+             
+            for i,item in enumerate(l):
+                if item == upd:
+                    l[i] = text
+                
+
+
+            
             print("task updated \n")
             pass
 
         case "mark done":
-            comp = int(input("enter the task number which you want to mark as complete: "))
-            l[comp-1] = l[comp-1] + "✓"
-            
-            for row in l:
-                print(row + "\n")
+
+            if not l:
+                print("there are no tasks, add a task to mark it!!")
+                continue
+
+            comp = questionary.select("select the tasks from below to mark as completed: ",choices =l).ask()
+
+            for i,item in enumerate(l):
+                if item == comp:
+                    l[i] = l[i] + "✓"
+
+                    for row in l:
+                        print(row)
+
+                    del l[i]           
             
         case "exit":
             break
