@@ -1,3 +1,7 @@
+import questionary
+
+
+
 """ 
 enter notes 
 view notes 
@@ -13,34 +17,25 @@ delete notes
 l = []
 while True:
 
-    try:
-
-        i = int(input('''
-                    
-                    
-                    enter what you want to do: 
-    1. add task
-    2.view task
-    3.delete task
-    4. update task
-    5. mark done
-    6. break 
-                    
-                    
-                    '''))
+    choice = questionary.select(
+    "what do you want to do:",
+    choices = ["add task",
+    "view task",
+    "delete task",
+    "update task",
+    "mark done",
+    "exit"]
+    ).ask()
     
-    except ValueError:
-        print("enter the correct number.")
-        continue
-    
-    match i:
 
-        case 1:
+    match choice:
+
+        case "add task":
            task =  input("enter your task:")
            l.append(task)
            continue
         
-        case 2:
+        case "view task":
             for row in l:
                 print(str(l.index(row)+1)+"." + row + "\n")
 
@@ -48,7 +43,7 @@ while True:
 
         
 
-        case 3:
+        case "delete task":
             delt =  int(input("enter the task number you want to delete: "))
             
             del l[delt-1]
@@ -59,21 +54,21 @@ while True:
 
             pass
 
-        case 4:
+        case "update task":
             upd = int(input("enter the task number you want to update: "))
             text = input("enter the updated task: ")
             l[upd-1] = text
             print("task updated \n")
             pass
 
-        case 5:
+        case "mark done":
             comp = int(input("enter the task number which you want to mark as complete: "))
             l[comp-1] = l[comp-1] + "✓"
             
             for row in l:
                 print(row + "\n")
             
-        case 6:
+        case "exit":
             break
 
 
