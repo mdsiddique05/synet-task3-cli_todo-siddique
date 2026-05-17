@@ -44,9 +44,6 @@ def upd():
             f.write(line + "\n")
 
 
-
-
-l = []
 while True:
 
     choice = questionary.select(
