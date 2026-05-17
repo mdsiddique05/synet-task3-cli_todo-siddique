@@ -18,6 +18,11 @@ def load(li):
 def delt():
     with open("data.txt", "r",encoding="utf-8") as f:
         lines = f.read().splitlines()
+
+        if not lines:
+            print("there is nothing here, first add the tasks!!")
+            return
+        
         dele = questionary.select("select what you want to delete:", choices=lines).ask()
     
     lines.remove(dele)
@@ -26,9 +31,17 @@ def delt():
         for line in lines:
             f.write(line + "\n")
 
+    print("XXXXXXXXX-----TASK DELETED-----XXXXXXXXX")
+
 def upd():
     with open("data.txt", "r",encoding="utf-8") as f:
         lines = f.read().splitlines()
+
+        if not lines:
+            
+            print("there is nothing here, first add the tasks!!")
+            return
+        
         upd = questionary.select("select what you want to update:", choices=lines).ask()
     
         text = input("enter the updated task:")
@@ -71,7 +84,12 @@ while True:
             clear_screen()
             
             with open("data.txt", "r",encoding="utf-8") as f:
+
                 for i,line in enumerate(f):
+                    if not line:
+                        print("there is nothing here, first add the tasks!!")
+                        continue
+
                     print(i+1,".",line.strip())
 
             continue
@@ -89,10 +107,8 @@ while True:
             # l.remove(delt)
             # print(f"deleted the task, the remaining tasks are: \n")
             # for row in l:
-            #     print(str(l.index(row)+1)+"." + row + "\n")
-
-            clear_screen()
-            print("XXXXXXXXX-----TASK DELETED-----XXXXXXXXX")
+            #     print(str(l.index(row)+1)+"." + row
+            
             
 
         case "update task":
@@ -111,12 +127,6 @@ while True:
             # for i,item in enumerate(l):
             #     if item == upd:
             #         l[i] = text
-                
-
-
-            
-            print("task updated \n")
-            pass
 
         case "mark done":
 
